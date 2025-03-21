@@ -1,1 +1,13 @@
 node_modules/
+
+# Temporariy, swap & ignored files
+/*.log
+/log*.txt
+/*.session
+*UNUSED
+*~
+.*.sw?
+*.tmp
+*.zip
+*.tgz
+

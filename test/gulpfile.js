@@ -1,39 +1,40 @@
-'use strict'
+'use strict';
 
-const fs = require('fs')
-const gulp = require('gulp')
-const cheerio = require('cheerio')
-const gulpImgLqip = require('..')
+const fs = require('fs');
+const gulp = require('gulp');
+const cheerio = require('cheerio');
+const gulpImgLqip = require('..');
 
-const fileList = [
-  'index.html',
-  'test.html'
-]
+const fileList = ['index.html', 'test.html'];
 
-const lqip = () => gulp.src('*.html').pipe(gulpImgLqip(__dirname))
+const lqip = () => gulp.src('*.html').pipe(gulpImgLqip(__dirname));
 const validate = () => {
-  const expectedErrors = 2
-  let errors = 0
+  const expectedErrors = 2;
+  let errors = 0;
 
-  fileList.forEach(filePath => {
-    const fileData = fs.readFileSync(filePath, { encoding: 'utf8' })
+  fileList.forEach((filePath) => {
+    const fileData = fs.readFileSync(filePath, { encoding: 'utf8' });
 
-    const $ = cheerio.load(fileData)
+    const $ = cheerio.load(fileData);
 
     $('img').each((index, element) => {
       if (!$(element).attr('data-src')) {
-        errors++
+        errors++;
       }
-    })
-  })
+    });
+  });
 
   if (errors !== expectedErrors) {
-    Promise.reject(new Error(`Some images don't have a data-src attribute (expected ${expectedErrors} got ${errors})`))
+    Promise.reject(
+      new Error(
+        `Some images don't have a data-src attribute (expected ${expectedErrors} got ${errors})`,
+      ),
+    );
 
-    return
+    return;
   }
 
-  return Promise.resolve()
-}
+  return Promise.resolve();
+};
 
-gulp.task('default', gulp.series(lqip, validate))
+gulp.task('default', gulp.series(lqip, validate));
