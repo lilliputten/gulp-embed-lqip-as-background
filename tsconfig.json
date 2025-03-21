@@ -7,17 +7,14 @@ vim: ft=jsonc
 {
   "compilerOptions": {
     "allowJs": true,
-    "baseUrl": ".",
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    // "jsx": "react", // ll11ty
     "lib": ["dom", "dom.iterable", "esnext"],
-    // "module": "esnext",
-    "module": "es6", // ll11ty
+    "module": "es6",
     "moduleResolution": "node",
     "noEmit": true,
     "noImplicitAny": true,
@@ -27,13 +24,9 @@ vim: ft=jsonc
     "strict": false,
     "target": "es5",
     "useDefineForClassFields": true,
-
-    "paths": { "src/*": ["src/*"] } // ll11ty
-
-    // "outDir": "./compiled-assets/",
+    "baseUrl": ".",
+    "paths": { "src/*": ["src/*"] }
   },
-  // "files": ["src/**/*"],
   "typeRoots": ["src/@types/**/*"],
-  // "include": ["src/**/*.ts", "src/**/*.js"],
   "include": ["src"]
 }

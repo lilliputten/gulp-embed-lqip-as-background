@@ -177,7 +177,9 @@ overrides:
       prettier/prettier: 'warn'
 
   - # jsonc files - commented json (@see https://www.npmjs.com/package/eslint-plugin-jsonc)...
-    files: '**/*.jsonc'
+    files:
+      - '**/*.jsonc'
+      - 'tsconfig.json'
     extends:
       - 'plugin:jsonc/recommended-with-jsonc'
     rules:

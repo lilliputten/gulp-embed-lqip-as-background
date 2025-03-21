@@ -1,3 +1,5 @@
+// @ts-check
+
 'use strict';
 
 const fs = require('fs');
@@ -17,7 +19,7 @@ const validate = () => {
 
     const $ = cheerio.load(fileData);
 
-    $('img').each((index, element) => {
+    $('img').each((_index, element) => {
       if (!$(element).attr('data-src')) {
         errors++;
       }
