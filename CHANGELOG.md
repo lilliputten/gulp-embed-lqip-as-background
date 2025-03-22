@@ -10,4 +10,4 @@
 - The plugin returns a stream to allow further processing of the source files.
 - Added extra parameters to more flexible control of the behavior: `lazyLoadClass`, `srcAttr`, `dataSrcAttr`, `scaleFactorAttr`, `scaleFactor`, `validFileExtensions`.
 - The thumbnail image is embedded into the "style:background" property as an svg object, which is a thumbnail, while the main image has not been uploaded.
-
+- Added old-way mode: if an `dataSrcAttr` is specified, then plugin generates the preview into this particular attribute, but not in the background object.

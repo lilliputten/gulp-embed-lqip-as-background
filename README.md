@@ -1,34 +1,71 @@
-# gulp-image-lqip
+<!--
+ @since 2025.03.22, 06:17
+ @changed 2025.03.22, 06:17
+-->
 
-[![npm version](https://img.shields.io/npm/v/gulp-image-lqip.svg)](https://www.npmjs.com/package/gulp-image-lqip)
-[![Build Status](https://github.com/Johann-S/gulp-image-lqip/workflows/Tests/badge.svg)](https://github.com/Johann-S/gulp-image-lqip/actions?workflow=Tests)
-[![dependencies Status](https://img.shields.io/david/Johann-S/gulp-image-lqip.svg)](https://david-dm.org/Johann-S/gulp-image-lqip)
-[![devDependency Status](https://img.shields.io/david/dev/Johann-S/gulp-image-lqip.svg)](https://david-dm.org/Johann-S/gulp-image-lqip?type=dev)
+# gulp-embed-lqip-as-background
+
+[![npm version](https://img.shields.io/npm/v/gulp-embed-lqip-as-background.svg)](https://www.npmjs.com/package/gulp-embed-lqip-as-background)
+[![Build Status](https://github.com/lilliputten/gulp-embed-lqip-as-background/workflows/Tests/badge.svg)](https://github.com/lilliputten/gulp-embed-lqip-as-background/actions?workflow=Tests)
+[![dependencies Status](https://img.shields.io/david/lilliputten/gulp-embed-lqip-as-background.svg)](https://david-dm.org/lilliputten/gulp-embed-lqip-as-background)
+[![devDependency Status](https://img.shields.io/david/dev/lilliputten/gulp-embed-lqip-as-background.svg)](https://david-dm.org/lilliputten/gulp-embed-lqip-as-background?type=dev)
 
 > Parses your HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
 
-[Demo](https://gulp-image-lqip.netlify.com/)
+This plugin does the same as [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip), but doesn't require JS on the client side -- it embeds a downscaled image into an image's style `background` and sets `loading=lazy` attribute to allow the browser to control the images loading.
+
+In case if you specify the `dataSrcAttr` options parameter, then it'll behave in original way: by storing the downscaled preview in the specified attribute instead of `style:background` object.
+
+Another improvement are:
+
+- This plugin returns relevant vinyl streams and allow further processing of the stream. It means that now you must to handle the resulting streams (at least to write them into the destination).
+- It automatically sets the `width`, `height` and `loading=lazy` attributes for the processed images.
+- It doesn't try to prettify the results. So, you should care about that by yourself (take a look at the [gulp-html-prettify](https://www.npmjs.com/package/gulp-html-prettify) plugin).
+
+(Probably it's possible to improve the solution using scroll events intersection observer if you don't trust the browser's loading algorithm.)
+
+You can see the real-case usage example on my other project page:
+
+[TubeCaster Bot promotional landing](https://tubecaster.lilliputten.com/)
+
+## Build info (auto-generated)
+
+- Project info: gulp-embed-lqip-as-background v.0.0.1 / 2025.03.22 07:24:10 +0300
+
+## Resources:
+
+- The project's repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
 
 ## Install
 
 ```bash
-npm install --save-dev gulp-image-lqip
+npm install --save-dev gulp-embed-lqip-as-background
 ```
 
 ## Usage
 
 ```javascript
 const gulp = require('gulp');
-const gulpEmbedLQIP = require('gulp-image-lqip');
+const gulpEmbedLQIP = require('gulp-embed-lqip-as-background');
 
 gulp.task('default', () => {
-  return (
-    gulp
-      .src('*.html')
-      // `gulp-image-lqip` needs filepaths
-      // so you can't have any plugins before it
-      .pipe(gulpEmbedLQIP(__dirname))
-  );
+  return gulp
+    .src(['*.html'])
+    .pipe(
+      gulpEmbedLQIP({
+        // It requires an absolute path of the image's root (website root in your project).
+        // This argument is required.
+        rootPath: __dirname,
+        // The following arguments are optional. See the options' reference below.
+        // dataSrcAttr: 'data-src', // Specify to produce old-way attributes (see an example in the `demo` folder).
+        // lazyLoadClass: 'lazy-load',
+        // srcAttr: 'src',
+        // scaleFactorAttr: 'data-scale-factor',
+        // scaleFactor: 10,
+        // validFileExtensions: ['.html', '.htm'],
+      }),
+    )
+    .pipe(gulp.dest('.'));
 });
 ```
 
@@ -42,7 +79,6 @@ Attention: No transparency is supported.
 
 ### gulpEmbedLQIP(rootPath, options)
 
-
 #### options
 
 Type: `Object`
@@ -54,14 +90,12 @@ Type: `Object`
 
 Define the rootPath for the images (probably that's the website root), it must be an **absolute** path.
 
-
 ##### lazyLoadClass
 
 - Type: `string`
 - Default: `"lazy-load"`
 
 Image class to detect if this element should be processed. Don't check the class if empty.
-
 
 ##### srcAttr
 
@@ -71,14 +105,14 @@ Image class to detect if this element should be processed. Don't check the class
 
 Attribute which contain your image.
 
-
 ##### dataSrcAttr
 
 - Type: `string`
 - Default: `""`
 
-Data source attribute to additionally store the scaled image base64 content, eg 'data-src'. Don't store if empty.
+Data source attribute to additionally store the scaled image base64 content, eg 'data-src'.
 
+Specify to produce old-way attributes (see an example in the `demo` folder).
 
 ##### scaleFactorAttr
 
@@ -86,7 +120,6 @@ Data source attribute to additionally store the scaled image base64 content, eg 
 - Default: `"data-scale-factor"`
 
 Downscale ratio attribute to fetch the value from specific element. It'll override a value form the global `scaleFactor` attribute (see below).
-
 
 ##### scaleFactor
 
@@ -96,7 +129,6 @@ Downscale ratio attribute to fetch the value from specific element. It'll overri
 
 Downscale image ratio. Default value: 10.
 
-
 ##### validFileExtensions
 
 - Type: `string[]`
@@ -104,7 +136,6 @@ Downscale image ratio. Default value: 10.
 - **Required**
 
 Valid source file extensions.
-
 
 ## Thanks
 

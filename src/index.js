@@ -14,16 +14,16 @@ const defaultConfig = {
   rootPath: '',
   lazyLoadClass: 'lazy-load',
   srcAttr: 'src',
-  dataSrcAttr: '',
+  dataSrcAttr: '', // Specify to produce old-way attributes (see an example in the `demo` folder).
   scaleFactorAttr: 'data-scale-factor',
   scaleFactor: 10,
   validFileExtensions: ['.html', '.htm'],
 };
 
 /**
- * @param {TPluginPartialConfig} [pluginConfig]
+ * @param {TPluginPartialConfig} pluginConfig
  */
-function plugin(pluginConfig = {}) {
+function plugin(pluginConfig) {
   /** @type {Vinyl[]} */
   const files = [];
 
@@ -41,12 +41,12 @@ function plugin(pluginConfig = {}) {
 
   /**
    * @param {Vinyl} file
-   * @param {string} _encoding - ignored if file contains a Buffer
+   * @param {string} _encoding - Ignored if file contains a Buffer
    * @param {TDoneCallback} done - Call this function (optionally with an error argument and data) when you are done processing the supplied chunk.
    */
   function aggregate(file, _encoding, done) {
     if (file.isStream()) {
-      // @see vinyl-buffer
+      // TODO: @see vinyl-buffer
       return done(new PluginError(PLUGIN_NAME, 'Streams not supported!'));
     }
     files.push(file);

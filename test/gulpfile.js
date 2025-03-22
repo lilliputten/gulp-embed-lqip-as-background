@@ -5,42 +5,39 @@ const gulp = require('gulp');
 const cheerio = require('cheerio');
 const gulpEmbedLQIP = require('..');
 const rename = require('gulp-rename');
-// const example = require('../src/examples/gulp-example-01.js');
-// const prettify = require('gulp-html-prettify');
 
-const fileList = ['.temp/index.html', '.temp/test.html'];
+// Generated files
+const fileList = ['index-test.html', 'test-test.html'];
 
+// Base pipe: generates the files from `fileList`
 const lqip = () => {
-  return (
-    gulp
-      .src(['*.html', '*.txt', '!*-orig.*'])
-      // .pipe(prettify({ indent_char: ' ', indent_size: 2 }))
-      .pipe(
-        gulpEmbedLQIP({
-          rootPath: __dirname,
-          // All the below parameters are optional. See plugin reference.
-          lazyLoadClass: 'lazy-load',
-          srcAttr: 'src',
-          dataSrcAttr: '',
-          scaleFactorAttr: 'data-scale-factor',
-          scaleFactor: 10,
-          validFileExtensions: ['.html', '.htm'],
-        }),
-      )
-      // .pipe(example())
-      .pipe(
-        rename((path) => {
-          path.basename += '-test';
-        }),
-      )
-      .pipe(gulp.dest('.'))
-    // .pipe(gulp.dest('.temp'))
-  );
+  return gulp
+    .src(['*.html', '*.txt', '!*-test.*'])
+    .pipe(
+      gulpEmbedLQIP({
+        rootPath: __dirname,
+        // All the below parameters are optional. See plugin reference.
+        lazyLoadClass: 'lazy-load',
+        srcAttr: 'src',
+        dataSrcAttr: '',
+        scaleFactorAttr: 'data-scale-factor',
+        scaleFactor: 10,
+        validFileExtensions: ['.html', '.htm'],
+      }),
+    )
+    .pipe(
+      rename((path) => {
+        path.basename += '-test';
+      }),
+    )
+    .pipe(gulp.dest('.'));
 };
 
+// Check for expected results in the `fileList`
 const validate = () => {
-  const expectedErrors = 2;
-  let errors = 0;
+  // Extected 2 images to be processed, one image per file
+  const expectedImages = 2;
+  let foundProcessedImages = 0;
 
   fileList.forEach((filePath) => {
     const fileData = fs.readFileSync(filePath, { encoding: 'utf8' });
@@ -48,16 +45,21 @@ const validate = () => {
     const $ = cheerio.load(fileData);
 
     $('img').each((_index, element) => {
-      if (!$(element).attr('data-src')) {
-        errors++;
+      const img = $(element);
+      const styleAttr = img.attr('style');
+      const hasProcessedThumbnail = styleAttr?.includes(
+        'background-image: url("data:image/svg+xml;',
+      );
+      if (hasProcessedThumbnail) {
+        foundProcessedImages++;
       }
     });
   });
 
-  if (errors !== expectedErrors) {
+  if (foundProcessedImages !== expectedImages) {
     Promise.reject(
       new Error(
-        `Some images don't have a data-src attribute (expected ${expectedErrors} got ${errors})`,
+        `Some images don't have an embedded background images (expected ${expectedImages} got ${foundProcessedImages})`,
       ),
     );
 

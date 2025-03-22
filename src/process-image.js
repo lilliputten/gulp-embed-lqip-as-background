@@ -52,24 +52,6 @@ function processImage(data, config) {
           .catch(reject);
       })
       .catch(reject);
-    /*
-    jimp
-      .read(fullPath)
-      // TODO: Additionally extract the scale factor from the image attribute (`data-scale-factor`)
-      .then((image) => image.resize(scaleFactor, jimp.AUTO))
-      .then((image) => image.getBufferAsync(ext))
-      .then((data) => {
-        const base64 = toBase64(supportedMimetypes[extension], data);
-        const imgData = {
-          base64,
-          width:
-        };
-        return resolve({
-          base64,
-        });
-      })
-      .catch(reject);
-    */
   });
 }
 

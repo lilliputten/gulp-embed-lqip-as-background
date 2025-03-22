@@ -124,27 +124,15 @@ function processHtml(allImagesData, file, config) {
     if (lazyLoadClass && !img.hasClass(lazyLoadClass)) {
       return;
     }
-    const svg = composeSvg(data);
-    const URI = `data:image/svg+xml;charset=utf-8,${svg}`;
-    /* // DEBUG
-     * console.log('[process-html:processHtml] image', file.path, src, {
-     *   // svg,
-     *   // URI,
-     *   // img,
-     *   src,
-     *   fullPath,
-     *   // data,
-     *   // imageList,
-     *   'file.path': file.path,
-     *   // file,
-     * });
-     */
     img.attr('loading', 'lazy');
-    img.css('background-size', 'cover');
-    img.css('background-image', `url("${URI}")`);
     // Set extra attribute
     if (dataSrcAttr && data.base64) {
       img.attr(dataSrcAttr, data.base64);
+    } else {
+      const svg = composeSvg(data);
+      const URI = `data:image/svg+xml;charset=utf-8,${svg}`;
+      img.css('background-size', 'cover');
+      img.css('background-image', `url("${URI}")`);
     }
     if (data.width) {
       img.attr('width', String(data.width));
@@ -154,19 +142,12 @@ function processHtml(allImagesData, file, config) {
     }
   });
 
-  try {
-    // Update file contents
-    const newContents = $.html(); // prettyHtml ? pretty($.html(), { ocd: true }) : $.html();
-    file.contents = Buffer.from(newContents); // Buffer.from('XXX');
+  // Update file contents
+  const newContents = $.html(); // prettyHtml ? pretty($.html(), { ocd: true }) : $.html();
+  file.contents = Buffer.from(newContents); // Buffer.from('XXX');
 
-    // And return it
-    return file;
-  } catch (error) {
-    console.error('[process-html:processHtml] error', error);
-    debugger;
-    // return reject(error);
-    throw error;
-  }
+  // And return it
+  return file;
 }
 
 module.exports = {
