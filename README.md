@@ -1,15 +1,19 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.22, 08:50
+ @changed 2025.03.22, 23:27
 -->
 
-# gulp-embed-lqip-as-background
+# Gulp LQIP small image placeholder generator plugin
 
 [![npm version](https://img.shields.io/npm/v/gulp-embed-lqip-as-background.svg)](https://www.npmjs.com/package/gulp-embed-lqip-as-background)
 
-> Parses your HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
+Gulp plugin which generates HTML image placeholders using lqip technique and allows to embed them into the image background to get rid of client-side javascript.
 
-This plugin does the same as [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip), but doesn't require JS on the client side -- it embeds a downscaled image into an image's style `background` and sets `loading=lazy` attribute to allow the browser to control the images loading.
+It parses your HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
+
+([LQIP](https://cloudinary.com/blog/low_quality_image_placeholders_lqip_explained) stands for "Low-quality image placeholders" technique to provide already prepared small resource-effective image previews.)
+
+This plugin does the same as [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip), but doesn't require JS on the client side -- it embeds a downscaled image into an image's style `background` (as an svg object) and sets `loading=lazy` attribute to allow the browser to control the images loading.
 
 In case if you specify the `dataSrcAttr` options parameter, then it'll behave in original way: by storing the downscaled preview in the specified attribute instead of `style:background` object.
 
@@ -23,15 +27,17 @@ Another improvement are:
 
 You can see the real-case usage example on my other project page:
 
-[TubeCaster Bot promotional landing](https://tubecaster.lilliputten.com/)
-
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.6 / 2025.03.22 08:41:26 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.9 / 2025.03.22 23:32:35 +0300
 
 ## Resources:
 
 - The project's repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
+
+- Real usage case: https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js
+
+- Real usage case deployed site: [TubeCasterBot promotional landing](https://tubecaster.lilliputten.com/)
 
 ## Install
 
@@ -39,21 +45,29 @@ You can see the real-case usage example on my other project page:
 npm install --save-dev gulp-embed-lqip-as-background
 ```
 
+or
+
+```bash
+pnpm i -D  gulp-embed-lqip-as-background
+```
+
+...etc...
+
 ## Usage
 
 ```javascript
 const gulp = require('gulp');
-const gulpEmbedLQIP = require('gulp-embed-lqip-as-background');
+const gulpEmbedLqipAsBackground = require('gulp-embed-lqip-as-background');
 
 gulp.task('default', () => {
   return gulp
     .src(['*.html'])
     .pipe(
-      gulpEmbedLQIP({
+      gulpEmbedLqipAsBackground({
         // It requires an absolute path of the image's root (website root in your project).
-        // This argument is required.
+        // This argument is only required.
         rootPath: __dirname,
-        // The following arguments are optional. See the options' reference below.
+        // The following arguments are optional, default values are displayed. See the options' reference below.
         // dataSrcAttr: 'data-src', // Specify to produce old-way attributes (see an example in the `demo` folder).
         // lazyLoadClass: 'lazy-load',
         // srcAttr: 'src',
@@ -74,7 +88,7 @@ Attention: No transparency is supported.
 
 ## API
 
-### gulpEmbedLQIP(options)
+### gulpEmbedLqipAsBackground(options)
 
 #### options
 

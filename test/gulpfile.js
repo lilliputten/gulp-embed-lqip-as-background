@@ -3,7 +3,7 @@
 const fs = require('fs');
 const gulp = require('gulp');
 const cheerio = require('cheerio');
-const gulpEmbedLQIP = require('..');
+const gulpEmbedLqipAsBackground = require('..');
 const rename = require('gulp-rename');
 
 // Generated files
@@ -14,7 +14,7 @@ const lqip = () => {
   return gulp
     .src(['*.html', '*.txt', '!*-test.*'])
     .pipe(
-      gulpEmbedLQIP({
+      gulpEmbedLqipAsBackground({
         rootPath: __dirname,
         // All the below parameters are optional. See plugin reference.
         lazyLoadClass: 'lazy-load',

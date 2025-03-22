@@ -1,4 +1,4 @@
-/// <reference path="./index.d.ts" />
+/// <reference path="./@types/index.d.ts" />
 // @ts-check
 
 const path = require('path');
@@ -48,7 +48,7 @@ function plugin(pluginConfig) {
   function aggregate(file, _encoding, done) {
     if (file.isStream()) {
       // TODO: @see vinyl-buffer
-      return done(new PluginError(PLUGIN_NAME, 'Streams not supported!'));
+      return done(new PluginError(PLUGIN_NAME, 'Streams are not supported!'));
     }
     files.push(file);
     done();
