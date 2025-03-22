@@ -30,7 +30,7 @@ You can see the real-case usage example on my other project page:
 
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.1 / 2025.03.22 07:24:10 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.2 / 2025.03.22 08:20:31 +0300
 
 ## Resources:
 
