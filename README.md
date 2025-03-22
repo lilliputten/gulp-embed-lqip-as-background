@@ -1,14 +1,11 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.22, 08:00
+ @changed 2025.03.22, 08:50
 -->
 
 # gulp-embed-lqip-as-background
 
 [![npm version](https://img.shields.io/npm/v/gulp-embed-lqip-as-background.svg)](https://www.npmjs.com/package/gulp-embed-lqip-as-background)
-[![Build Status](https://github.com/lilliputten/gulp-embed-lqip-as-background/workflows/Tests/badge.svg)](https://github.com/lilliputten/gulp-embed-lqip-as-background/actions?workflow=Tests)
-[![dependencies Status](https://img.shields.io/david/lilliputten/gulp-embed-lqip-as-background.svg)](https://david-dm.org/lilliputten/gulp-embed-lqip-as-background)
-[![devDependency Status](https://img.shields.io/david/dev/lilliputten/gulp-embed-lqip-as-background.svg)](https://david-dm.org/lilliputten/gulp-embed-lqip-as-background?type=dev)
 
 > Parses your HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
 
@@ -30,7 +27,7 @@ You can see the real-case usage example on my other project page:
 
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.3 / 2025.03.22 08:27:39 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.6 / 2025.03.22 08:41:26 +0300
 
 ## Resources:
 
@@ -77,7 +74,7 @@ Attention: No transparency is supported.
 
 ## API
 
-### gulpEmbedLQIP(rootPath, options)
+### gulpEmbedLQIP(options)
 
 #### options
 

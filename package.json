@@ -1,6 +1,6 @@
 {
   "name": "gulp-embed-lqip-as-background",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "description": "Gulp plugin which generates HTML image placeholders using lqip technique and allows to embed them into the image background to get rid of client-side javascript.",
   "author": "lilliputten <lilliputten@gmail.com> (https://lilliputten.com/)",
   "contributors": [],
@@ -22,7 +22,8 @@
     "medium"
   ],
   "files": [
-    "src/*.js"
+    "src/**/*.js",
+    "src/**/*.d.ts"
   ],
   "engines": {
     "node": ">=10"
