@@ -1,39 +1,72 @@
-'use strict'
+// @ts-check
 
-const fs = require('fs')
-const gulp = require('gulp')
-const cheerio = require('cheerio')
-const gulpImgLqip = require('..')
+const fs = require('fs');
+const gulp = require('gulp');
+const cheerio = require('cheerio');
+const gulpEmbedLQIP = require('..');
+const rename = require('gulp-rename');
 
-const fileList = [
-  'index.html',
-  'test.html'
-]
+// Generated files
+const fileList = ['index-test.html', 'test-test.html'];
 
-const lqip = () => gulp.src('*.html').pipe(gulpImgLqip(__dirname))
+// Base pipe: generates the files from `fileList`
+const lqip = () => {
+  return gulp
+    .src(['*.html', '*.txt', '!*-test.*'])
+    .pipe(
+      gulpEmbedLQIP({
+        rootPath: __dirname,
+        // All the below parameters are optional. See plugin reference.
+        lazyLoadClass: 'lazy-load',
+        srcAttr: 'src',
+        dataSrcAttr: '',
+        scaleFactorAttr: 'data-scale-factor',
+        scaleFactor: 10,
+        validFileExtensions: ['.html', '.htm'],
+      }),
+    )
+    .pipe(
+      rename((path) => {
+        path.basename += '-test';
+      }),
+    )
+    .pipe(gulp.dest('.'));
+};
+
+// Check for expected results in the `fileList`
 const validate = () => {
-  const expectedErrors = 2
-  let errors = 0
+  // Extected 2 images to be processed, one image per file
+  const expectedImages = 2;
+  let foundProcessedImages = 0;
 
-  fileList.forEach(filePath => {
-    const fileData = fs.readFileSync(filePath, { encoding: 'utf8' })
+  fileList.forEach((filePath) => {
+    const fileData = fs.readFileSync(filePath, { encoding: 'utf8' });
 
-    const $ = cheerio.load(fileData)
+    const $ = cheerio.load(fileData);
 
-    $('img').each((index, element) => {
-      if (!$(element).attr('data-src')) {
-        errors++
+    $('img').each((_index, element) => {
+      const img = $(element);
+      const styleAttr = img.attr('style');
+      const hasProcessedThumbnail = styleAttr?.includes(
+        'background-image: url("data:image/svg+xml;',
+      );
+      if (hasProcessedThumbnail) {
+        foundProcessedImages++;
       }
-    })
-  })
+    });
+  });
 
-  if (errors !== expectedErrors) {
-    Promise.reject(new Error(`Some images don't have a data-src attribute (expected ${expectedErrors} got ${errors})`))
+  if (foundProcessedImages !== expectedImages) {
+    Promise.reject(
+      new Error(
+        `Some images don't have an embedded background images (expected ${expectedImages} got ${foundProcessedImages})`,
+      ),
+    );
 
-    return
+    return;
   }
 
-  return Promise.resolve()
-}
+  return Promise.resolve();
+};
 
-gulp.task('default', gulp.series(lqip, validate))
+gulp.task('default', gulp.series(lqip, validate));

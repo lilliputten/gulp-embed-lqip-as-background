@@ -3,10 +3,7 @@
     "node": true,
     "es6": true
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:node/recommended"
-  ],
+  "extends": ["eslint:recommended", "plugin:node/recommended"],
   "rules": {
     "strict": "error"
   }

@@ -1,0 +1,1 @@
+Test: this file shouldn't be processed and changed as non-html file, but just copied as-is.
