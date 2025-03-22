@@ -22,6 +22,7 @@
     "medium"
   ],
   "files": [
+    "project-version.txt",
     "src/**/*.js",
     "src/**/*.d.ts"
   ],
