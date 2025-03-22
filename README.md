@@ -23,15 +23,17 @@ Another improvement are:
 
 You can see the real-case usage example on my other project page:
 
-[TubeCaster Bot promotional landing](https://tubecaster.lilliputten.com/)
-
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.6 / 2025.03.22 08:41:26 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.8 / 2025.03.22 23:13:17 +0300
 
 ## Resources:
 
 - The project's repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
+
+- Real usage case: https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js
+
+- Real usage deployed site: [TubeCasterBot promotional landing](https://tubecaster.lilliputten.com/)
 
 ## Install
 
@@ -43,13 +45,13 @@ npm install --save-dev gulp-embed-lqip-as-background
 
 ```javascript
 const gulp = require('gulp');
-const gulpEmbedLQIP = require('gulp-embed-lqip-as-background');
+const gulpEmbedLqipAsBackground = require('gulp-embed-lqip-as-background');
 
 gulp.task('default', () => {
   return gulp
     .src(['*.html'])
     .pipe(
-      gulpEmbedLQIP({
+      gulpEmbedLqipAsBackground({
         // It requires an absolute path of the image's root (website root in your project).
         // This argument is required.
         rootPath: __dirname,
@@ -74,7 +76,7 @@ Attention: No transparency is supported.
 
 ## API
 
-### gulpEmbedLQIP(options)
+### gulpEmbedLqipAsBackground(options)
 
 #### options
 
