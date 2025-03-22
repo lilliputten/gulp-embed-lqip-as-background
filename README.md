@@ -1,6 +1,6 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.22, 06:17
+ @changed 2025.03.22, 08:00
 -->
 
 # gulp-embed-lqip-as-background
@@ -140,7 +140,7 @@ Valid source file extensions.
 ## Thanks
 
 - [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip) for an idea and a base for my own features.
-- [Nikita Dubko](https://mefody.dev/) for a method of embedding preview thumbnail into the image elemnts as a backround svg object.
+- [Nikita Dubko's 11ty site](https://github.com/MeFoDy/mefody.dev) for a method of embedding preview thumbnail into the image elemnts as a backround svg object.
 
 ## License
 
