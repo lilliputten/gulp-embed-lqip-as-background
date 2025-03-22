@@ -1,1 +1,1 @@
-gulp-embed-lqip-as-background v.0.0.9 / 2025.03.22 23:32:35 +0300
+gulp-embed-lqip-as-background v.0.0.10 / 2025.03.23 01:09:32 +0300

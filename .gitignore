@@ -1,8 +1,7 @@
 /node_modules/
 /tsconfig.tsbuildinfo
 
-/test/.temp
-/test/*-test.*
+/test/.*-result.*
 
 # Temporariy, swap & ignored files
 /*.log

@@ -1,11 +1,11 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.22, 23:11
+ @changed 2025.03.23, 01:10
 -->
 
 # CHANGELOG
 
-## [v.0.0.9](https://github.com/lilliputten/gulp-embed-lqip-as-background/releases/tag/v.0.0.9) - 2025.03.22
+## [v.0.0.10](https://github.com/lilliputten/gulp-embed-lqip-as-background/releases/tag/v.0.0.10) - 2025.03.22
 
 - The plugin returns a stream to allow further processing of the source files.
 - Added extra parameters to more flexible control of the behavior: `lazyLoadClass`, `srcAttr`, `dataSrcAttr`, `scaleFactorAttr`, `scaleFactor`, `validFileExtensions`.

@@ -7,12 +7,12 @@ const gulpEmbedLqipAsBackground = require('..');
 const rename = require('gulp-rename');
 
 // Generated files
-const fileList = ['index-test.html', 'test-test.html'];
+const fileList = ['.index-result.html', '.test-result.html'];
 
 // Base pipe: generates the files from `fileList`
 const lqip = () => {
   return gulp
-    .src(['*.html', '*.txt', '!*-test.*'])
+    .src(['*.html', '*.txt', '!.*-result.*'])
     .pipe(
       gulpEmbedLqipAsBackground({
         rootPath: __dirname,
@@ -27,7 +27,7 @@ const lqip = () => {
     )
     .pipe(
       rename((path) => {
-        path.basename += '-test';
+        path.basename = `.${path.basename}-result`;
       }),
     )
     .pipe(gulp.dest('.'));

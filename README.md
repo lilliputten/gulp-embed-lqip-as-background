@@ -1,6 +1,6 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.22, 23:27
+ @changed 2025.03.23, 01:10
 -->
 
 # Gulp LQIP small image placeholder generator plugin
@@ -29,15 +29,22 @@ You can see the real-case usage example on my other project page:
 
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.9 / 2025.03.22 23:32:35 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.10 / 2025.03.23 01:09:32 +0300
 
 ## Resources:
 
 - The project's repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
 
-- Real usage case: https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js
+Real use case:
 
-- Real usage case deployed site: [TubeCasterBot promotional landing](https://tubecaster.lilliputten.com/)
+- Real use case: https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js
+
+- Deployed site: [TubeCasterBot promotional landing](https://tubecaster.lilliputten.com/)
+
+Demos (see by a browser in a cloned repo):
+
+- Test result for [test/test.html](test/test.html): [demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html)
+- Original plugin test (uses `data-src` attribute and in-page js code): [demo/demo-data-src-attr.html](demo/demo-data-src-attr.html)
 
 ## Install
 
@@ -84,7 +91,9 @@ gulp.task('default', () => {
 
 Currently `['jpeg', 'jpg', 'png', 'gif']` files are supported.
 
-Attention: No transparency is supported.
+No transparency is supported.
+
+The images with a `background:style` svg objects mostly should have `display: inline-block` css rule to be displayed correctly (see bootstrap classes `figure` or v5 `inline-block`).
 
 ## API
 
