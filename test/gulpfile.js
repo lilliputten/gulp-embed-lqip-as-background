@@ -1,15 +1,43 @@
 // @ts-check
 
-'use strict';
-
 const fs = require('fs');
 const gulp = require('gulp');
 const cheerio = require('cheerio');
-const gulpImgLqip = require('..');
+const gulpEmbedLQIP = require('..');
+const rename = require('gulp-rename');
+// const example = require('../src/examples/gulp-example-01.js');
+// const prettify = require('gulp-html-prettify');
 
-const fileList = ['index.html', 'test.html'];
+const fileList = ['.temp/index.html', '.temp/test.html'];
 
-const lqip = () => gulp.src('*.html').pipe(gulpImgLqip(__dirname));
+const lqip = () => {
+  return (
+    gulp
+      .src(['*.html', '*.txt', '!*-orig.*'])
+      // .pipe(prettify({ indent_char: ' ', indent_size: 2 }))
+      .pipe(
+        gulpEmbedLQIP({
+          rootPath: __dirname,
+          // All the below parameters are optional. See plugin reference.
+          lazyLoadClass: 'lazy-load',
+          srcAttr: 'src',
+          dataSrcAttr: '',
+          scaleFactorAttr: 'data-scale-factor',
+          scaleFactor: 10,
+          validFileExtensions: ['.html', '.htm'],
+        }),
+      )
+      // .pipe(example())
+      .pipe(
+        rename((path) => {
+          path.basename += '-test';
+        }),
+      )
+      .pipe(gulp.dest('.'))
+    // .pipe(gulp.dest('.temp'))
+  );
+};
+
 const validate = () => {
   const expectedErrors = 2;
   let errors = 0;

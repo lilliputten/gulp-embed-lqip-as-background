@@ -12,7 +12,7 @@
       "type": "node",
       "request": "launch",
       "runtimeExecutable": "pnpm",
-      "runtimeArgs": ["exec", "gulp", "lqip", "--gulpfile", "test/gulpfile.js"],
+      "runtimeArgs": ["exec", "gulp", "--gulpfile", "test/gulpfile.js"],
       "console": "integratedTerminal",
       // "protocol": "inspector",
       "skipFiles": ["${workspaceFolder}/node_modules/**/*.js", "<node_internals>/**/*.js"]

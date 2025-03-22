@@ -11,15 +11,15 @@
 
 ## Install
 
-```sh
+```bash
 npm install --save-dev gulp-image-lqip
 ```
 
 ## Usage
 
-```js
+```javascript
 const gulp = require('gulp');
-const gulpImgLqip = require('gulp-image-lqip');
+const gulpEmbedLQIP = require('gulp-image-lqip');
 
 gulp.task('default', () => {
   return (
@@ -27,7 +27,7 @@ gulp.task('default', () => {
       .src('*.html')
       // `gulp-image-lqip` needs filepaths
       // so you can't have any plugins before it
-      .pipe(gulpImgLqip(__dirname))
+      .pipe(gulpEmbedLQIP(__dirname))
   );
 });
 ```
@@ -36,53 +36,81 @@ gulp.task('default', () => {
 
 Currently `['jpeg', 'jpg', 'png', 'gif']` files are supported.
 
+Attention: No transparency is supported.
+
 ## API
 
-### gulpImgLqip(rootPath, options)
+### gulpEmbedLQIP(rootPath, options)
 
-#### rootPath
-
-- Type: `string`
-- **Required**
-
-Define the rootPath of your website, it must be an **absolute** path.
 
 #### options
 
 Type: `Object`
 
-##### attribute
+##### rootPath
 
 - Type: `string`
-- Default: `data-src`
+- **Required**
 
-Attribute which will contain the Base64 representation of your image.
+Define the rootPath for the images (probably that's the website root), it must be an **absolute** path.
 
-##### pretty
 
-- Type: `Boolean`
-- Default: `true`
+##### lazyLoadClass
 
-Use [pretty](https://github.com/jonschlinkert/pretty) to beautify the HTML files.
+- Type: `string`
+- Default: `"lazy-load"`
+
+Image class to detect if this element should be processed. Don't check the class if empty.
+
 
 ##### srcAttr
 
 - Type: `string`
-- Default: `src`
+- Default: `"src"`
+- **Required**
 
 Attribute which contain your image.
 
-## Support me
 
-If you want to thank me or support my work:
+##### dataSrcAttr
 
-- You can become my [Patron](https://www.patreon.com/jservoire)
-- Or buy me a coffee: [PayPal](https://www.paypal.me/jservoire)
+- Type: `string`
+- Default: `""`
+
+Data source attribute to additionally store the scaled image base64 content, eg 'data-src'. Don't store if empty.
+
+
+##### scaleFactorAttr
+
+- Type: `string`
+- Default: `"data-scale-factor"`
+
+Downscale ratio attribute to fetch the value from specific element. It'll override a value form the global `scaleFactor` attribute (see below).
+
+
+##### scaleFactor
+
+- Type: `number`
+- Default: `10`
+- **Required**
+
+Downscale image ratio. Default value: 10.
+
+
+##### validFileExtensions
+
+- Type: `string[]`
+- Default: `['.html', '.htm']`
+- **Required**
+
+Valid source file extensions.
+
 
 ## Thanks
 
-Thanks [lqip](https://github.com/zouhir/lqip) for the inspiration :+1:
+- [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip) for an idea and a base for my own features.
+- [Nikita Dubko](https://mefody.dev/) for a method of embedding preview thumbnail into the image elemnts as a backround svg object.
 
 ## License
 
-MIT © [Johann-S](https://www.johann-servoire.fr/)
+MIT © [Lilliputten & Noble](https://lilliputten.com/)
