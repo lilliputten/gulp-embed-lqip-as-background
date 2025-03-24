@@ -1,7 +1,7 @@
 {
   "name": "gulp-embed-lqip-as-background",
   "version": "0.0.10",
-  "timestamp": "2025.03.23 01:09:32 +0300",
+  "timestamp": "2025.03.24 21:50:13 +0300",
   "changed": "2025.03.22, 23:30",
   "description": "Gulp LQIP small image placeholder generator plugin",
   "author": "lilliputten <lilliputten@gmail.com> (https://lilliputten.com/)",

@@ -1,6 +1,6 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.23, 01:10
+ @changed 2025.03.24, 22:05
 -->
 
 # Gulp LQIP small image placeholder generator plugin
@@ -29,7 +29,7 @@ You can see the real-case usage example on my other project page:
 
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.10 / 2025.03.23 01:09:32 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.10 / 2025.03.24 21:50:13 +0300
 
 ## Resources:
 
@@ -43,7 +43,7 @@ Real use case:
 
 Demos (see by a browser in a cloned repo):
 
-- Test result for [test/test.html](test/test.html): [demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html)
+- Test result for [test/test.html](test/test.html): [demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html) (See 'Example case' section below.)
 - Original plugin test (uses `data-src` attribute and in-page js code): [demo/demo-data-src-attr.html](demo/demo-data-src-attr.html)
 
 ## Install
@@ -93,7 +93,34 @@ Currently `['jpeg', 'jpg', 'png', 'gif']` files are supported.
 
 No transparency is supported.
 
-The images with a `background:style` svg objects mostly should have `display: inline-block` css rule to be displayed correctly (see bootstrap classes `figure` or v5 `inline-block`).
+The images with a generated `background:style` svg objects mostly should have `display: inline-block` css rule to be displayed correctly (see bootstrap classes `figure` or v5's `inline-block`).
+
+## Example case
+
+A tag in the source file ([test/test.html](test/test.html)):
+
+```html
+<img
+  src="img/csb.jpg"
+  class="img-fluid lazy-load figure"
+  data-scale-factor="5"
+/>
+```
+
+Generated code ([demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html)):
+
+```html
+<img
+  src="img/csb.jpg"
+  class="img-fluid lazy-load figure"
+  data-scale-factor="5"
+  loading="lazy"
+  style="background-size: cover; background-image: url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http%3A//www.w3.org/2000/svg' xmlns%3Axlink='http%3A//www.w3.org/1999/xlink' viewBox='0 0 600 599'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='.5'%3E%3C/feGaussianBlur%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1'%3E%3C/feFuncA%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cimage filter='url(%23b)' preserveAspectRatio='none' height='100%25' width='100%25' xlink%3Ahref='data%3Aimage/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIAAUABQMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1V/ZI/aK8Rfs3wfH7w58P/AAZ8PYdF8YftF/ELx7JZNoup2Is7zWYdFtXjZtJ1uxW9vJIdPgm1PUHjhj1HUpLvUYtPsJby6SX8vp8SZxkt6eGq4XE0sZbGtZjQr4urRq11epCnVWLo2otcnLBwupRlNybm7ft+c8F5DmawFSrSxODr4TB0sBVeWVaGDoYr2FOnUWInQlha7jVk68lK9Weiik1FJL//2Q=='%3E%3C/image%3E%3C/svg%3E&quot;);"
+  width="600"
+  height="599"
+/>
+
+```
 
 ## API
 
