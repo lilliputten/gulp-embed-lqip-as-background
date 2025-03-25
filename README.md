@@ -148,7 +148,6 @@ Image class to detect if this element should be processed. Don't check the class
 
 - Type: `string`
 - Default: `"src"`
-- **Required**
 
 Attribute which contain your image.
 
@@ -172,7 +171,6 @@ Downscale ratio attribute to fetch the value from specific element. It'll overri
 
 - Type: `number`
 - Default: `10`
-- **Required**
 
 Downscale image ratio. Default value: 10.
 
@@ -180,7 +178,6 @@ Downscale image ratio. Default value: 10.
 
 - Type: `string[]`
 - Default: `['.html', '.htm']`
-- **Required**
 
 Valid source file extensions.
 
