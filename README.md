@@ -149,7 +149,6 @@ Image class to detect if this element should be processed. Don't check the class
 
 - Type: `string`
 - Default: `"src"`
-- **Required**
 
 Source attribute name. Should be relative (to the `rootPath`) path. Would be fetched from the `data-src-attr-name` of the node. Also the following attributes will be checked: `data-src`, `data-lazy`, `data-lazy-src`. Default: 'src'.
 
@@ -171,7 +170,6 @@ Downscale ratio attribute name to fetch the value from specific element. It'll o
 
 - Type: `number`
 - Default: `10`
-- **Required**
 
 Downscale image ratio. Default value: 10.
 
@@ -179,7 +177,6 @@ Downscale image ratio. Default value: 10.
 
 - Type: `string[]`
 - Default: `['.html', '.htm']`
-- **Required**
 
 Valid source file extensions.
 
