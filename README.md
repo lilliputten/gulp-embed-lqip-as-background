@@ -1,6 +1,6 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.24, 22:05
+ @changed 2025.03.27, 06:06
 -->
 
 # Gulp LQIP small image placeholder generator plugin
@@ -29,7 +29,7 @@ You can see the real-case usage example on my other project page:
 
 ## Build info (auto-generated)
 
-- Project info: gulp-embed-lqip-as-background v.0.0.10 / 2025.03.24 21:50:13 +0300
+- Project info: gulp-embed-lqip-as-background v.0.0.11 / 2025.03.27 06:06:32 +0300
 
 ## Resources:
 
@@ -100,11 +100,7 @@ The images with a generated `background:style` svg objects mostly should have `d
 A tag in the source file ([test/test.html](test/test.html)):
 
 ```html
-<img
-  src="img/csb.jpg"
-  class="img-fluid lazy-load figure"
-  data-scale-factor="5"
-/>
+<img src="img/csb.jpg" class="img-fluid lazy-load figure" data-scale-factor="5" />
 ```
 
 Generated code ([demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html)):
@@ -115,11 +111,16 @@ Generated code ([demo/demo-style-background-svg-object.html](demo/demo-style-bac
   class="img-fluid lazy-load figure"
   data-scale-factor="5"
   loading="lazy"
-  style="background-size: cover; background-image: url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http%3A//www.w3.org/2000/svg' xmlns%3Axlink='http%3A//www.w3.org/1999/xlink' viewBox='0 0 600 599'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur stdDeviation='.5'%3E%3C/feGaussianBlur%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete' tableValues='1 1'%3E%3C/feFuncA%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cimage filter='url(%23b)' preserveAspectRatio='none' height='100%25' width='100%25' xlink%3Ahref='data%3Aimage/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIAAUABQMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1V/ZI/aK8Rfs3wfH7w58P/AAZ8PYdF8YftF/ELx7JZNoup2Is7zWYdFtXjZtJ1uxW9vJIdPgm1PUHjhj1HUpLvUYtPsJby6SX8vp8SZxkt6eGq4XE0sZbGtZjQr4urRq11epCnVWLo2otcnLBwupRlNybm7ft+c8F5DmawFSrSxODr4TB0sBVeWVaGDoYr2FOnUWInQlha7jVk68lK9Weiik1FJL//2Q=='%3E%3C/image%3E%3C/svg%3E&quot;);"
+  style="background-size: cover; background-image: url(&quot;data:image/svg+xml;charset=utf-8,%3Csvg
+    xmlns='http%3A//www.w3.org/2000/svg' xmlns%3Axlink='http%3A//www.w3.org/1999/xlink'
+    viewBox='0 0 600 599'%3E%3Cfilter id='b' color-interpolation-filters='sRGB'%3E%3CfeGaussianBlur
+    stdDeviation='.5'%3E%3C/feGaussianBlur%3E%3CfeComponentTransfer%3E%3CfeFuncA type='discrete'
+    tableValues='1 1'%3E%3C/feFuncA%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Cimage
+    filter='url(%23b)' preserveAspectRatio='none' height='100%25' width='100%25'
+    xlink%3Ahref='data%3Aimage/jpeg;base64,/9j/---A LONG BASE64 ENCOED STRING IS COMING HERE---//2Q=='%3E%3C/image%3E%3C/svg%3E&quot;);"
   width="600"
   height="599"
 />
-
 ```
 
 ## API
@@ -150,23 +151,21 @@ Image class to detect if this element should be processed. Don't check the class
 - Default: `"src"`
 - **Required**
 
-Attribute which contain your image.
+Source attribute name. Should be relative (to the `rootPath`) path. Would be fetched from the `data-src-attr-name` of the node. Also the following attributes will be checked: `data-src`, `data-lazy`, `data-lazy-src`. Default: 'src'.
 
 ##### dataSrcAttr
 
 - Type: `string`
 - Default: `""`
 
-Data source attribute to additionally store the scaled image base64 content, eg 'data-src'.
-
-Specify to produce old-way attributes (see an example in the `demo` folder).
+Data source attribute name to additionally store the scaled image base64 content, eg 'data-src'. Default: empty (don't store). Specify to produce old-way attributes (see an example in the `demo` folder).
 
 ##### scaleFactorAttr
 
 - Type: `string`
 - Default: `"data-scale-factor"`
 
-Downscale ratio attribute to fetch the value from specific element. It'll override a value form the global `scaleFactor` attribute (see below).
+Downscale ratio attribute name to fetch the value from specific element. It'll override a value form the global `scaleFactor` attribute (see below). Default value: 'data-scale-factor'.
 
 ##### scaleFactor
 

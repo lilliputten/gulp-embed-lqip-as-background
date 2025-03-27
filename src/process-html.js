@@ -2,7 +2,6 @@
 
 const path = require('path');
 const cheerio = require('cheerio');
-// const pretty = require('pretty');
 const { processImage, supportedMimetypes } = require('./process-image');
 const Vinyl = require('vinyl'); // eslint-disable-line no-unused-vars
 const { composeSvg } = require('./compose-svg');
@@ -10,12 +9,28 @@ const { composeSvg } = require('./compose-svg');
 const validImgExtensions = Object.keys(supportedMimetypes).map((ext) => `.${ext}`);
 
 /**
+ * @param {TImageData['img']} img
+ * @param {TPluginConfig} config
+ * @return {string}
+ */
+function getImgSrcAttr(img, config) {
+  const { srcAttr } = config;
+  const nodeSrcAttr = img.attr('data-src-attr-name') || srcAttr;
+  return (
+    img.attr(nodeSrcAttr) ||
+    img.attr('data-src') ||
+    img.attr('data-lazy') ||
+    img.attr('data-lazy-src')
+  );
+}
+
+/**
  * @param {Record<string, TImageData>} allImagesData
  * @param {Vinyl} file
  * @param {TPluginConfig} config
  */
 function colectImages(allImagesData, file, config) {
-  const { lazyLoadClass, srcAttr, rootPath } = config;
+  const { lazyLoadClass, rootPath } = config;
 
   // Do nothing if it's not a valid file
   const extension = path.extname(file.path).toLowerCase();
@@ -40,7 +55,7 @@ function colectImages(allImagesData, file, config) {
   // Process found images and collect them into the `allImagesData` object...
   imageList.forEach((el) => {
     const img = $(el);
-    const src = img.attr(srcAttr);
+    const src = getImgSrcAttr(img, config);
     // Has already exists?
     if (allImagesData[src]) {
       return;
@@ -91,7 +106,7 @@ function prepareImages(allImagesData, config) {
  * @param {TPluginConfig} config
  */
 function processHtml(allImagesData, file, config) {
-  const { lazyLoadClass, srcAttr, dataSrcAttr, rootPath } = config;
+  const { lazyLoadClass, dataSrcAttr, rootPath } = config;
 
   // Get file contents again, for this specific source file
   const contents = file.contents;
@@ -104,16 +119,10 @@ function processHtml(allImagesData, file, config) {
     return file;
   }
 
-  /* // DEBUG
-   * console.log('[process-html:processHtml] image', file.path, {
-   *   images: imageList.map((el) => $(el).attr(srcAttr)),
-   * });
-   */
-
   // Process all the images...
   imageList.forEach((el) => {
     const img = $(el);
-    const src = img.attr(srcAttr);
+    const src = getImgSrcAttr(img, config);
     const fullPath = path.join(rootPath, src);
     const data = allImagesData[fullPath];
     // Has processed data?
