@@ -1,9 +1,15 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.27, 06:18
+ @changed 2025.05.04, 19:35
 -->
 
 # CHANGELOG
+
+## [v.0.0.12](https://github.com/lilliputten/gulp-embed-lqip-as-background/releases/tag/v.0.0.12) - 2025.05.04
+
+- Updated test files and examples, readme, removed old demos.
+
+[Compare with the previous version](https://github.com/lilliputten/gulp-embed-lqip-as-background/compare/v.0.0.11...v.0.0.12)
 
 ## [v.0.0.11](https://github.com/lilliputten/gulp-embed-lqip-as-background/releases/tag/v.0.0.11) - 2025.03.27
 

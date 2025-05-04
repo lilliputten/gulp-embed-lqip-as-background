@@ -7,12 +7,12 @@ const gulpEmbedLqipAsBackground = require('..');
 const rename = require('gulp-rename');
 
 // Generated files
-const fileList = ['.index-result.html', '.test-result.html'];
+const fileList = ['.index.html', '.test.html', '.data-src-test.html'];
 
 // Base pipe: generates the files from `fileList`
 const lqip = () => {
   return gulp
-    .src(['*.html', '*.txt', '!.*-result.*'])
+    .src(['*.html', '*.txt', '!.*', '!data-src-test.*'])
     .pipe(
       gulpEmbedLqipAsBackground({
         rootPath: __dirname,
@@ -22,12 +22,37 @@ const lqip = () => {
         dataSrcAttr: '',
         scaleFactorAttr: 'data-scale-factor',
         scaleFactor: 10,
-        validFileExtensions: ['.html', '.htm'],
+        // validFileExtensions: ['.html', '.htm'],
       }),
     )
     .pipe(
       rename((path) => {
-        path.basename = `.${path.basename}-result`;
+        console.log('Processed file (normal):', path.basename);
+        path.basename = `.${path.basename}`;
+      }),
+    )
+    .pipe(gulp.dest('.'));
+};
+
+// Old way lqip
+const oldWayLqip = () => {
+  return gulp
+    .src(['data-src-test.html', '!.*.*'])
+    .pipe(
+      gulpEmbedLqipAsBackground({
+        rootPath: __dirname,
+        lazyLoadClass: 'lazy-load',
+        srcAttr: 'src',
+        dataSrcAttr: 'data-src',
+        // scaleFactorAttr: 'data-scale-factor',
+        // scaleFactor: 10,
+        // validFileExtensions: ['.html', '.htm'],
+      }),
+    )
+    .pipe(
+      rename((path) => {
+        console.log('Processed file (old-way):', path.basename);
+        path.basename = `.${path.basename}`;
       }),
     )
     .pipe(gulp.dest('.'));
@@ -56,6 +81,7 @@ const validate = () => {
     });
   });
 
+  console.log(`Found ${foundProcessedImages} processed images out of ${expectedImages} expected.`)
   if (foundProcessedImages !== expectedImages) {
     Promise.reject(
       new Error(
@@ -69,4 +95,4 @@ const validate = () => {
   return Promise.resolve();
 };
 
-gulp.task('default', gulp.series(lqip, validate));
+gulp.task('default', gulp.series(gulp.parallel(lqip, oldWayLqip), validate));
