@@ -1,6 +1,6 @@
 <!--
  @since 2025.03.22, 06:17
- @changed 2025.03.27, 06:06
+ @changed 2025.05.04, 20:15
 -->
 
 # Gulp LQIP small image placeholder generator plugin
@@ -9,15 +9,15 @@
 
 Gulp plugin which generates HTML image placeholders using lqip technique and allows to embed them into the image background to get rid of client-side javascript.
 
-It parses your HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
+It parses your (passed on input) HTML files to find images and adds a data-src attribute to them which contains their Base64 representation.
 
 ([LQIP](https://cloudinary.com/blog/low_quality_image_placeholders_lqip_explained) stands for "Low-quality image placeholders" technique to provide already prepared small resource-effective image previews.)
 
 This plugin does the same as [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip), but doesn't require JS on the client side -- it embeds a downscaled image into an image's style `background` (as an svg object) and sets `loading=lazy` attribute to allow the browser to control the images loading.
 
-In case if you specify the `dataSrcAttr` options parameter, then it'll behave in original way: by storing the downscaled preview in the specified attribute instead of `style:background` object.
+In case if you specify the `dataSrcAttr` options parameter (eg, with `data-src`), then it'll behave in original way: by storing the downscaled preview in the specified attribute instead of `style:background` object. But this approach required extra js code & styles, see those in the example in [test/demo-data-src-test.html](test/demo-data-src-test.html).
 
-Another improvement are:
+Other improvements are:
 
 - This plugin returns relevant vinyl streams and allow further processing of the stream. It means that now you must to handle the resulting streams (at least to write them into the destination).
 - It automatically sets the `width`, `height` and `loading=lazy` attributes for the processed images.
@@ -25,28 +25,28 @@ Another improvement are:
 
 (Probably it's possible to improve the solution using scroll events intersection observer if you don't trust the browser's loading algorithm.)
 
-You can see the real-case usage example on my other project page:
+## [Version info (auto-generated)](#version-info)
 
-## Build info (auto-generated)
+- Project info: gulp-embed-lqip-as-background v.0.0.12 / 2025.05.04 19:21:36 +0300
 
-- Project info: gulp-embed-lqip-as-background v.0.0.11 / 2025.03.27 06:06:32 +0300
+## [Resources](#resources)
 
-## Resources:
+GitHub:
 
-- The project's repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
+- Repository: https://github.com/lilliputten/gulp-embed-lqip-as-background
 
-Real use case:
+You can see the real-case usage example in my other project:
 
-- Real use case: https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js
+- [TubeCasterBot example gulpfile](https://github.com/lilliputten/tubecaster-landing/blob/main/gulpfile.js#L45)
 
-- Deployed site: [TubeCasterBot promotional landing](https://tubecaster.lilliputten.com/)
+- [Deployed TubeCasterBot promotional landing site](https://tubecaster.lilliputten.com/)
 
 Demos (see by a browser in a cloned repo):
 
-- Test result for [test/test.html](test/test.html): [demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html) (See 'Example case' section below.)
-- Original plugin test (uses `data-src` attribute and in-page js code): [demo/demo-data-src-attr.html](demo/demo-data-src-attr.html)
+- Test result for [test/test.html](test/test.html): [test/demo-test.html]test/demo-test.htmll). (See 'Example case' section below.)
+- Original plugin test (uses `data-src` attribute and in-page js code & styles): [test/demo-data-src-test.html](test/demo-data-src-test.html).
 
-## Install
+## [Install](#install)
 
 ```bash
 npm install --save-dev gulp-embed-lqip-as-background
@@ -55,12 +55,12 @@ npm install --save-dev gulp-embed-lqip-as-background
 or
 
 ```bash
-pnpm i -D  gulp-embed-lqip-as-background
+pnpm i -D gulp-embed-lqip-as-background
 ```
 
 ...etc...
 
-## Usage
+## [Usage](#usage)
 
 ```javascript
 const gulp = require('gulp');
@@ -75,7 +75,7 @@ gulp.task('default', () => {
         // This argument is only required.
         rootPath: __dirname,
         // The following arguments are optional, default values are displayed. See the options' reference below.
-        // dataSrcAttr: 'data-src', // Specify to produce old-way attributes (see an example in the `demo` folder).
+        // dataSrcAttr: 'data-src', // Specify to produce old-way `data-src` attribute (required extra js code & styles, see example in [test/demo-data-src-test.html](test/demo-data-src-test.html)).
         // lazyLoadClass: 'lazy-load',
         // srcAttr: 'src',
         // scaleFactorAttr: 'data-scale-factor',
@@ -87,7 +87,7 @@ gulp.task('default', () => {
 });
 ```
 
-## Supported files
+## [Supported files](#supported-files)
 
 Currently `['jpeg', 'jpg', 'png', 'gif']` files are supported.
 
@@ -95,7 +95,7 @@ No transparency is supported.
 
 The images with a generated `background:style` svg objects mostly should have `display: inline-block` css rule to be displayed correctly (see bootstrap classes `figure` or v5's `inline-block`).
 
-## Example case
+## [Example case](#example-case)
 
 A tag in the source file ([test/test.html](test/test.html)):
 
@@ -103,7 +103,7 @@ A tag in the source file ([test/test.html](test/test.html)):
 <img src="img/csb.jpg" class="img-fluid lazy-load figure" data-scale-factor="5" />
 ```
 
-Generated code ([demo/demo-style-background-svg-object.html](demo/demo-style-background-svg-object.html)):
+Generated code ([test/demo-test.html](test/demo-test.html)):
 
 ```html
 <img
@@ -123,7 +123,7 @@ Generated code ([demo/demo-style-background-svg-object.html](demo/demo-style-bac
 />
 ```
 
-## API
+## [API](#api)
 
 ### gulpEmbedLqipAsBackground(options)
 
@@ -157,7 +157,7 @@ Source attribute name. Should be relative (to the `rootPath`) path. Would be fet
 - Type: `string`
 - Default: `""`
 
-Data source attribute name to additionally store the scaled image base64 content, eg 'data-src'. Default: empty (don't store). Specify to produce old-way attributes (see an example in the `demo` folder).
+Data source attribute name to additionally store the scaled image base64 content, eg 'data-src'. Default: empty (don't store). Specify to produce old-way attributes (see an example in the `test` folder).
 
 ##### scaleFactorAttr
 
@@ -180,11 +180,11 @@ Downscale image ratio. Default value: 10.
 
 Valid source file extensions.
 
-## Thanks
+## [Thanks](#thanks)
 
 - [Johann Servoire's gulp-image-lqip](https://github.com/Johann-S/gulp-image-lqip) for an idea and a base for my own features.
 - [Nikita Dubko's 11ty site](https://github.com/MeFoDy/mefody.dev) for a method of embedding preview thumbnail into the image elemnts as a backround svg object.
 
-## License
+## [License](#license)
 
 MIT © [Lilliputten & Noble](https://lilliputten.com/)

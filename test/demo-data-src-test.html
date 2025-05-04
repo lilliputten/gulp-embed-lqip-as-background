@@ -1,0 +1,60 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <title>Demonstrates the old-way apprach uses data-src attribute and js code</title>
+    <style>
+      img.no-js {
+        -webkit-filter: blur(0);
+        filter: blur(0);
+      }
+
+      img.lazy-load[data-src] {
+        -webkit-filter: blur(50px);
+        filter: blur(50px);
+      }
+
+      img.lazy-load {
+        transition: -webkit-filter 0.7s ease-in;
+        transition: filter 0.7s ease-in;
+        transition:
+          filter 0.7s ease-in,
+          -webkit-filter 0.7s ease-in;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <p>Demonstrates the old-way apprach uses data-src attribute, extra styles and js code</p>
+      <img src="img/csb.jpg" class="no-js lazy-load" data-scale-factor="5" alt="Should be processed with a preview in the data-src attribute" loading="lazy" data-src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAf/AABEIAAUABQMBEQACEQEDEQH/xAGiAAABBQEBAQEBAQAAAAAAAAAAAQIDBAUGBwgJCgsQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+gEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoLEQACAQIEBAMEBwUEBAABAncAAQIDEQQFITEGEkFRB2FxEyIygQgUQpGhscEJIzNS8BVictEKFiQ04SXxFxgZGiYnKCkqNTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqCg4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2dri4+Tl5ufo6ery8/T19vf4+fr/2gAMAwEAAhEDEQA/AP1V/ZI/aK8Rfs3wfH7w58P/AAZ8PYdF8YftF/ELx7JZNoup2Is7zWYdFtXjZtJ1uxW9vJIdPgm1PUHjhj1HUpLvUYtPsJby6SX8vp8SZxkt6eGq4XE0sZbGtZjQr4urRq11epCnVWLo2otcnLBwupRlNybm7ft+c8F5DmawFSrSxODr4TB0sBVeWVaGDoYr2FOnUWInQlha7jVk68lK9Weiik1FJL//2Q==" width="600" height="599">
+    </div>
+    <script>
+      (function () {
+        // Walt thru all the images
+        var imageList = [].slice.call(document.querySelectorAll('img.no-js'));
+
+        imageList.forEach(function (imageEl) {
+          imageEl.classList.remove('no-js');
+
+          // Extract an image url from the `src` attribute
+          var originSrc = imageEl.getAttribute('src');
+          // And set preview data to the source (temporarily)
+          imageEl.setAttribute('src', imageEl.getAttribute('data-src'));
+
+          // Create an image element to load the real image data
+          var image = new Image();
+          image.src = originSrc;
+
+          // Put the found image data into the `src` attribute
+          image.addEventListener('load', function () {
+            setTimeout(function () {
+              imageEl.setAttribute('src', originSrc);
+              imageEl.removeAttribute('data-src');
+            }, 200);
+          });
+        });
+      })();
+    </script>
+  
+
+</body></html>
